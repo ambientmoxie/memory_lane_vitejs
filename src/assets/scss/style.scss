@@ -1,0 +1,141 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  cursor: grab;
+  @media (min-width: 320px) and (max-width: 1024px){
+    cursor: not-allowed;
+  }
+}
+
+p {
+  font-size: 1.4rem;
+}
+
+#main {
+  position: absolute;
+  color: white;
+
+  div[class] {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .draggable-elt {
+    width: 70rem;
+    position: relative;
+
+    &:nth-child(1) {
+      top: 10rem;
+      left: 80rem;
+    }
+
+    &:nth-child(2) {
+      top: -4rem;
+      left: 2rem;
+    }
+
+    &:nth-child(3) {
+      top: 58rem;
+      left: 177rem;
+    }
+
+    &:nth-child(4) {
+      top: 10rem;
+      left: 30rem;
+    }
+
+    &:nth-child(5) {
+      top: 191rem;
+      left: 159rem;
+    }
+
+    &:nth-child(6) {
+      top: 1rem;
+      left: 297rem;
+    }
+
+    &:nth-child(7) {
+      top: 181rem;
+      left: -140rem;
+    }
+
+    &:nth-child(8) {
+      top: 80rem;
+      left: 80rem;
+    }
+
+    &:nth-child(9) {
+      top: 188rem;
+      left: 256rem;
+    }
+
+    &:nth-child(10) {
+      top: 128rem;
+      left: -25rem;
+    }
+
+    &:nth-child(11) {
+      top: 10.5rem;
+      left: 20rem;
+    }
+
+    &:nth-child(12) {
+      top: 18rem;
+      left: -11rem;
+    }
+
+    &:nth-child(13) {
+      top: 90rem;
+      left: 90rem;
+    }
+
+    &:nth-child(14) {
+      top: 40rem;
+      left: 0.2rem;
+    }
+
+    &:nth-child(15) {
+      top: 48rem;
+      left: -165rem;
+    }
+  }
+}
+
+#p5canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+}
+
+.locked-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background-color: white;
+  @media (min-width: 320px) and (max-width: 1024px){
+    display: flex;
+  }
+}
