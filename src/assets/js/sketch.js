@@ -1,16 +1,16 @@
 let canvasWidth;
 let canvasHeight;
 
-// Deux variables principales sont définies :
-// 1 - "paths" est un tableau qui enregistrera toutes les lignes dessinées par l'utilisateur.
-// 2 - "currentPath" est un tableau qui contiendra tous les points formant la ligne dessinée par l'utilisateur.
+// Two main variables are defined:
+// 1 - "paths" is an array that will record all the lines drawn by the user.
+// 2 - "currentPath" is an array that will contain all the points forming the line drawn by the user.
 
 let paths = [];
 let currentPath = [];
 
-// La fonction pixelDensity est ajouté. Elle modifie la résolution du canvas.
-// Les lignes 24 et 25 sont nécessairse pour redimensionner correctement l'élément canvas après le changement de résolution.
-// Ces changements permettent de télécharger un image de meilleure qualité.
+// The pixelDensity function is added. It modifies the resolution of the canvas.
+// Lines 24 and 25 are necessary to correctly resize the canvas element after the resolution change.
+// These changes allow for downloading a higher quality image.
 
 export default function sketch(p) {
   p.setup = function () {
@@ -35,11 +35,11 @@ export default function sketch(p) {
     drawPath(currentPath);
   };
 
-  // "drawPath" est la fonction principale :
-  // 1 - La fonction vérifie si la courbe que l'utilisateur essaye de tracer contient au moins deux points (les deux points nécessaires au début d'une courbe).
-  // Note : Ces deux points sont rapidement atteints compte tenu du fait qu'un point est rajouté à la simple pression de la souris au rythme de 60fps.
-  // 2 - Les points du début et de la fin de la courbe sont doublés. Condition nécessaire à la création du tracé, ces deux points ne sont pas visibles à l'écran.
-  // 3 - La fonction boucle dans le tableau currentPath ou/et Path afin de dessiner tous les points enregistrés dans le/les tableau(x).
+  // "drawPath" is the main function:
+  // 1 - The function checks if the curve the user is trying to draw contains at least two points (the two points necessary for the beginning of a curve).
+  // Note: These two points are quickly reached given that a point is added with just a press of the mouse at the rate of 60fps.
+  // 2 - The start and end points of the curve are doubled. This condition is necessary for the creation of the path, these two points are not visible on the screen.
+  // 3 - The function loops through the currentPath and/or Path array(s) to draw all the points recorded in the array(s).
 
   function drawPath(path) {
     if (path.length > 1) {
@@ -59,26 +59,26 @@ export default function sketch(p) {
     }
   }
 
-  // Au clic :
-  // 1 - La variable currentPath est vidée
-  // 2 - La variable commence à se remplir de nouveau.
+  // On click:
+  // 1 - The currentPath variable is cleared.
+  // 2 - The variable starts to fill up again.
 
   p.mousePressed = function (e) {
     currentPath = [];
     currentPath.push({ x: e.clientX, y: e.clientY });
   };
 
-  // Tant que le bouton de la souris est enfoncé :
-  // 1 - Les positions immédiates du curseur sont enregistrées dans le tableau "currentPath" constituant un tableau composé de plusieurs objets, eux-mêmes composés de coordonnée en X et en Y.
-  // 2 - Visualisation du tableau final : [ {x: x1, y: y1}, {x: x2, y: y2}, ... ]
+  // As long as the mouse button is pressed:
+  // 1 - The immediate positions of the cursor are recorded in the "currentPath" array, forming an array composed of several objects, each consisting of X and Y coordinates.
+  // 2 - Visualization of the final array: [ {x: x1, y: y1}, {x: x2, y: y2}, ... ]
 
   p.mouseDragged = function (e) {
     currentPath.push({ x: e.clientX, y: e.clientY });
   };
 
-  // Lorsque le curseur de la souris est relaché :
-  // 1 - Une condition vérifie si la variable "currentPath" n'est pas vide.
-  // 2 - Si la variable contient un tracé (i.e un tableau de coordonnées), il est ajouté à la variable "paths" qui contient les anciens tracés et contiendra les tracés à venir.
+  // When the mouse cursor is released:
+  // 1 - A condition checks if the "currentPath" variable is not empty.
+  // 2 - If the variable contains a trace (i.e., an array of coordinates), it is added to the "paths" variable, which contains old traces and will contain future traces.
 
   p.mouseReleased = function () {
     if (currentPath.length > 0) {
@@ -87,10 +87,10 @@ export default function sketch(p) {
     }
   };
 
-  // Lorsque la fenêtre du navigateur est redimensionnée :
-  // 1 - Les deux variable de largeur et de hauteur sont redéfinies.
-  // 2 - le canvas est redimensionné.
-  // 3 - La variable "paths" est vidée (i.e les lignes dessinées sur le canvas sont effacées).
+  // When the browser window is resized:
+  // 1 - The two width and height variables are redefined.
+  // 2 - The canvas is resized.
+  // 3 - The "paths" variable is cleared (i.e., the lines drawn on the canvas are erased).
 
   p.windowResized = function () {
     canvasWidth = window.innerWidth / 2;
@@ -99,7 +99,7 @@ export default function sketch(p) {
     paths = [];
   };
 
-  // Si l'utilisateur appuie sur "s" ou "S", le contenu du canvas est exporté au format png.
+  // If the user presses "s" or "S", the canvas content is exported in PNG format.
 
   p.keyPressed = function () {
     if (p.key === "s" || p.key === "S") {

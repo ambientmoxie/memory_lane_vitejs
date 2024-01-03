@@ -1,4 +1,4 @@
-// Déclaration de variables vides.
+// Empty var.
 
 let startX;
 let startY;
@@ -7,7 +7,7 @@ let offsetY;
 let dragElem;
 
 export default function drag() {
-  // Stockage de la position en X et Y de l'élément déplaçable.
+  // Storing the X and Y position of the movable element.
 
   const initX = document.getElementById("main").offsetLeft;
   const initY = document.getElementById("main").offsetTop;
@@ -16,15 +16,15 @@ export default function drag() {
   document.onmouseup = onMouseUp;
   document.ondblclick = onDoubleClick;
 
-  // Au clic de la souris :
-  // 1 - Les coordonnées en X de la souris sont enregistrée.
-  // 2 - Les coordonnées en Y de la souris sont enregistrée.
-  // 3 - Les coordonnées en X du coin supérieur gauche du container déplaçable sont enregistrées.
-  // 4 - Les coordonnées en Y du coin supérieur gauche du container déplaçable sont enregistrées.
-  // 5 - Le container déplaçable est enregistré dans une variable.
-  // ------ Si le bouton de la souris est maintenu et que l'utilisateur bouge le curseur :
-  // ------ 1 - Les coordonnées en X du coin supérieux gauche de l'élément déplaçable sont remplacée à chaque nouveau mouvement de souris.
-  // ------ 2 - Les coordonnées en Y du coin supérieux gauche de l'élément déplaçable sont remplacée à chaque nouveau mouvement de souris.
+  // On mouse click:
+// 1 - The X coordinates of the mouse are recorded.
+// 2 - The Y coordinates of the mouse are recorded.
+// 3 - The X coordinates of the upper left corner of the movable container are recorded.
+// 4 - The Y coordinates of the upper left corner of the movable container are recorded.
+// 5 - The movable container is stored in a variable.
+// ------ If the mouse button is held down and the user moves the cursor:
+// ------ 1 - The X coordinates of the upper left corner of the movable element are replaced with each new mouse movement.
+// ------ 2 - The Y coordinates of the upper left corner of the movable element are replaced with each new mouse movement.
 
   function onMouseDown(e) {
     startX = e.clientX;
@@ -40,19 +40,19 @@ export default function drag() {
     dragElem.style.top = offsetY + e.clientY - startY + "px";
   }
 
-  // Si l'utilisateur relache le clic :
-  // 1 - La function onMouseMove est détaché de l'évènement oumousemove. Plus rien ne se passe quand l'utilisateur bouge la souris.
-  // 2 - La variable dragELem est vidée. Le container déplaçable ne sera plus identifié avant que l'utilisateur clic de nouveau sur le document.
+  // If the user releases the click:
+  // 1 - The onMouseMove function is detached from the onmousemove event. Nothing happens when the user moves the mouse anymore.
+  // 2 - The dragElem variable is cleared. The movable container will no longer be identified until the user clicks again on the document.
 
   function onMouseUp() {
     document.onmousemove = null;
     dragElem = null;
   }
 
-  // Si l'utilisateur double clic :
-  // 1 - La container modifiable est identifié et enregistré dans une variable.
-  // 2 - Sa position initial en X lui est de nouveau attribuée.
-  // 3 - Sa position initial en Y lui est de nouveau attribuée.
+  // If the user double clicks:
+  // 1 - The modifiable container is identified and stored in a variable.
+  // 2 - Its initial X position is reassigned to it.
+  // 3 - Its initial Y position is reassigned to it.
 
   function onDoubleClick() {
     dragElem = document.getElementById("main");

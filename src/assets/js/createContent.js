@@ -1,7 +1,7 @@
 import quotes from "./quotes";
 const container = document.getElementById("main");
 
-// Simple function qui récupère du contenu et l'injecte dans le body.
+// Simple function that retrieves content and injects it into the body.
 
 export default function createContent() {
   quotes.forEach((quote) => {
