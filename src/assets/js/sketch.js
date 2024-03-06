@@ -1,12 +1,22 @@
+const landmark = document.getElementById("landmark");
 let canvasWidth;
 let canvasHeight;
-
 // Two main variables are defined:
 // 1 - "paths" is an array that will record all the lines drawn by the user.
 // 2 - "currentPath" is an array that will contain all the points forming the line drawn by the user.
 
 let paths = [];
 let currentPath = [];
+
+function defineWidthAndHeight() {
+  if (landmark.offsetWidth < 1024) {
+    canvasWidth = landmark.offsetWidth;
+    canvasHeight = landmark.offsetHeight * 0.5;
+  } else {
+    canvasWidth = landmark.offsetWidth / 2;
+    canvasHeight = landmark.offsetHeight;
+  }
+}
 
 // The pixelDensity function is added. It modifies the resolution of the canvas.
 // Lines 24 and 25 are necessary to correctly resize the canvas element after the resolution change.
@@ -16,8 +26,8 @@ export default function sketch(p) {
   p.setup = function () {
     p.pixelDensity(3);
 
-    canvasWidth = window.innerWidth / 2;
-    canvasHeight = window.innerHeight;
+    defineWidthAndHeight();
+
     let cnv = p.createCanvas(canvasWidth, canvasHeight);
     cnv.parent(document.body);
     cnv.id("p5canvas");
@@ -59,13 +69,22 @@ export default function sketch(p) {
     }
   }
 
+  function addPoint(e) {
+    // We need to account for canvas position offset when using clientX and clientY
+    // let rect = p.canvas.getBoundingClientRect();
+    currentPath.push({
+      x: e.clientX,
+      y: e.clientY,
+    });
+  }
+
   // On click:
   // 1 - The currentPath variable is cleared.
   // 2 - The variable starts to fill up again.
 
   p.mousePressed = function (e) {
     currentPath = [];
-    currentPath.push({ x: e.clientX, y: e.clientY });
+    addPoint(e);
   };
 
   // As long as the mouse button is pressed:
@@ -73,7 +92,7 @@ export default function sketch(p) {
   // 2 - Visualization of the final array: [ {x: x1, y: y1}, {x: x2, y: y2}, ... ]
 
   p.mouseDragged = function (e) {
-    currentPath.push({ x: e.clientX, y: e.clientY });
+    addPoint(e);
   };
 
   // When the mouse cursor is released:
@@ -87,14 +106,35 @@ export default function sketch(p) {
     }
   };
 
+  // Touch Events
+  p.touchStarted = function (e) {
+    currentPath = [];
+    addPoint(e);
+    return false; // Prevent default behavior (like scrolling)
+  };
+
+  p.touchMoved = function (e) {
+    addPoint(e);
+    return false;
+  };
+
+  p.touchEnded = function () {
+    console.log("end");
+    if (currentPath.length > 0) {
+      paths.push(currentPath);
+      currentPath = [];
+    }
+  };
+
   // When the browser window is resized:
   // 1 - The two width and height variables are redefined.
   // 2 - The canvas is resized.
   // 3 - The "paths" variable is cleared (i.e., the lines drawn on the canvas are erased).
 
   p.windowResized = function () {
-    canvasWidth = window.innerWidth / 2;
-    canvasHeight = window.innerHeight;
+    
+    defineWidthAndHeight();
+
     p.resizeCanvas(canvasWidth, canvasHeight);
     paths = [];
   };

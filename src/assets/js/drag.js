@@ -12,9 +12,16 @@ export default function drag() {
   const initX = document.getElementById("main").offsetLeft;
   const initY = document.getElementById("main").offsetTop;
 
+  // Mouse Events
   document.onmousedown = onMouseDown;
+  // document.onmousemove = onMouseMove;
   document.onmouseup = onMouseUp;
   document.ondblclick = onDoubleClick;
+
+  // Touch Events
+  document.ontouchstart = onTouchStart;
+  document.ontouchend = onMouseUp; // Reuse onMouseUp for touchend
+  document.ontouchmove = onTouchMove;
 
   // On mouse click:
 // 1 - The X coordinates of the mouse are recorded.
@@ -35,9 +42,39 @@ export default function drag() {
     document.onmousemove = onMouseMove;
   }
 
+  function onTouchStart(e) {
+    if (e.touches.length === 1) { // Only deal with one finger
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      setOffsetAndDragElem();
+      document.ontouchmove = onTouchMove;
+    }
+  }
+
+  function setOffsetAndDragElem() {
+    offsetX = document.getElementById("main").offsetLeft;
+    offsetY = document.getElementById("main").offsetTop;
+    dragElem = document.getElementById("main");
+  }
+
   function onMouseMove(e) {
     dragElem.style.left = offsetX + e.clientX - startX + "px";
     dragElem.style.top = offsetY + e.clientY - startY + "px";
+  }
+
+  function onTouchMove(e) {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      moveDragElement(touch.clientX, touch.clientY);
+    }
+  }
+
+  function moveDragElement(clientX, clientY) {
+    if (dragElem) {
+      dragElem.style.left = offsetX + clientX - startX + 'px';
+      dragElem.style.top = offsetY + clientY - startY + 'px';
+    }
   }
 
   // If the user releases the click:
