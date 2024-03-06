@@ -71,10 +71,11 @@ export default function sketch(p) {
 
   function addPoint(e) {
     // We need to account for canvas position offset when using clientX and clientY
-    // let rect = p.canvas.getBoundingClientRect();
+
+    // Adjusting for canvas position
     currentPath.push({
-      x: e.clientX,
-      y: e.clientY,
+        x: e.clientX || e.touches[0].clientX,
+        y: e.clientY || e.touches[0].clientY,
     });
   }
 
@@ -108,18 +109,21 @@ export default function sketch(p) {
 
   // Touch Events
   p.touchStarted = function (e) {
+    e.preventDefault(); // Explicitly prevent default behavior
+
     currentPath = [];
     addPoint(e);
     return false; // Prevent default behavior (like scrolling)
   };
 
   p.touchMoved = function (e) {
+    e.preventDefault(); // Explicitly prevent default behavior
+
     addPoint(e);
     return false;
   };
 
   p.touchEnded = function () {
-    console.log("end");
     if (currentPath.length > 0) {
       paths.push(currentPath);
       currentPath = [];
@@ -132,7 +136,7 @@ export default function sketch(p) {
   // 3 - The "paths" variable is cleared (i.e., the lines drawn on the canvas are erased).
 
   p.windowResized = function () {
-    
+
     defineWidthAndHeight();
 
     p.resizeCanvas(canvasWidth, canvasHeight);
